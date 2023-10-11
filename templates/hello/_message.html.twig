@@ -1,0 +1,10 @@
+{% for key,message in messages|slice(0, limit) %}
+    <tr style ="color: grey;">
+        <td><a href="{{ path('app_show_one', { id: key }) }}">{{message.message}}</a></td>
+    {% if date(message.created) > date('-1year')%}
+        <td>{{ message.created|date('d/m/Y') }}</td>
+    {% else %}
+        <td>Older than 1 year </td>
+    {% endif %}
+    </tr>
+{% endfor %}
