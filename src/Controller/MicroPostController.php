@@ -22,12 +22,13 @@ class MicroPostController extends AbstractController
     public function index(MicroPostRepository $p): Response
     {
         return $this->render('micro_post/index.html.twig', [
-            'posts' => $p->findAllWithComments(),
+            'posts' => $p->findAllWithAuthor(),
         ]);
     }
 
 
     #[Route('/micro-post/{post}', name: 'app_micro_post_show')]
+    #[IsGranted(MicroPost::VIEW, 'post')]
     public function showOne(MicroPost $post, CommentRepository $comments): Response
     {
         return $this->render('/micro_post/show.html.twig', [
@@ -37,9 +38,10 @@ class MicroPostController extends AbstractController
 
 
     #[Route('/micro-post/{id}/edit', name: 'app_micro_post_edit')]
-    #[IsGranted('ROLE_EDITOR')]
+    #[IsGranted(MicroPost::EDIT, 'id')]
     public function edit(MicroPost $id, Request $request, MicroPostRepository $p): Response
     {
+
         $form = $this->createForm(MicroPostType::class, $id);
         $form->handleRequest($request);
 
