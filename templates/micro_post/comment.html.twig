@@ -2,7 +2,11 @@
 
 {% block title %}Add comment{% endblock %}
 
-{% block bread %}→ <a href="{{ path('app_micro_post_show', {post: post.id}) }}">Post</a> → Comment  {% endblock %} 
+{% block bread %} 
+	<span>→</span>
+    <a href="{{ path('app_micro_post_show', {post: post.id}) }}" class="hover:text-indigo-500">Post</a>
+    <a href="{{ path('app_micro_post_comment', {post: post.id}) }}" class="hover:text-indigo-500">Comment</a>
+{% endblock %} 
 
 {% block body %}
     {{ include('micro_post/_post.html.twig', {post: post}) }}
