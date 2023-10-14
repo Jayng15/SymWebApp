@@ -22,8 +22,7 @@ class MicroPostVoter extends Voter
     {
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
-        return in_array($attribute, [MicroPost::EDIT, MicroPost::VIEW])
-            && $subject instanceof MicroPost;
+        return in_array($attribute, [MicroPost::EDIT, MicroPost::VIEW]);
     }
 
     /**

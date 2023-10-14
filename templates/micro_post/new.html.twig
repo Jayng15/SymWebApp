@@ -1,7 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Post Form{% endblock %}
-{% block bread %}→ Creates{% endblock %}
+{% block title %}Post Creating{% endblock %}
+{% block bread %}
+<span>→</span>
+<a class="hover:text-indigo-500" href="{{path('app_micro_post_add')}}"> Creates</a>
+{% endblock %}
 
 {% block body %} {{ include('micro_post/_form.html.twig') }} {% endblock %}
 
