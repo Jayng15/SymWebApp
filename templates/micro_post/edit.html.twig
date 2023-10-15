@@ -6,7 +6,7 @@
     <span>→</span>
     <a href="{{ path('app_micro_post_show', {post: post.id}) }} class="hover:text-indigo-500"">Post</a> 
     <span>→</span>
-    <a href="{{ path('app_micro_post_edit', {post: post.id}) }} class="hover:text-indigo-500"">Edit</a> 
+    <a href="{{ path('app_micro_post_edit', {id: post.id}) }} class="hover:text-indigo-500"">Edit</a> 
 {% endblock %}
 
 {% block body %} {{ include('micro_post/_form.html.twig') }} {% endblock %}
