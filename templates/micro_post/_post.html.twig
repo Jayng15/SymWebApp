@@ -11,9 +11,14 @@
 		{{ post.created | date("M j, Y") }}
 	</div>
 	<div>
-		<a href="#">
+		{% if post.likedBy.contains(app.user) %}
+		<a href="{{ path('app_unlike', {post: post.id}) }}">
+			Unlike
+		{% else %}
+		<a href="{{ path('app_like', {post: post.id}) }}">
 			Like
-			<span class="px-2 rounded-md bg-gray-200 dark:bg-gray-700">0</span>
+		{% endif %}
+			<span class="px-2 rounded-md bg-gray-200 dark:bg-gray-700">{{ post.likedBy.count }}</span>
 		</a>
 	</div>
 	<div class="text-sm text-gray-500 dark:text-gray-400">
