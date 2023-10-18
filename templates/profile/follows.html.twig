@@ -12,7 +12,7 @@
 
 	{{ include('profile/_profile_headers.html.twig') }}
 	{{ include('profile/_profile_tabs.html.twig') }}
-	{{ include('micro_post/_post_list.html.twig', { posts: posts }) }}
+	{{ include('follower/follower.html.twig', { users: user.follows }) }}
 
 {% endblock %}
 
