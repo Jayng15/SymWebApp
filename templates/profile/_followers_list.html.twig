@@ -1,0 +1,30 @@
+{% if users|length > 0 %}
+    <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
+    {% for follower in users %}
+        <div class="flex justify-between items-center">
+                <a href="{{ path('app_profile', { user: follower.id }) }}">
+                    <div class="text-lg">
+                        {{ follower.userProfile.name ?? follower.email }}
+                    </div>
+                    <div class="text-gray-500">
+                        {{ follower.email }}
+                    </div>
+                </a>
+                <div>
+                    {{ include('follower/_follow_button.html.twig', { user: follower }) }}
+                </div>
+        </div>
+    {% endfor %}
+    </div>
+{% else %}
+
+<div class="w-full text-center">
+    <div class="font-bold text-gray-600 dark:text-gray-400">
+        Nothing to show
+    </div>
+    <div class="text-gray-400 dark:text-gray-500">
+        The followers list is empty
+    </div>
+</div>
+
+{% endif %}

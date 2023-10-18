@@ -1,7 +1,7 @@
 	<div class="grid grid-cols-1 sm:grid-cols-2 xl:gird-cols-3 gap-4">
 		{% if posts|length > 0 %}
 			{% for post in posts %}
-                {{ include ('micro_post/_post.html.twig', {post: post}) }}
+                {{ include('micro_post/_post.html.twig', {post: post}) }}
 			{% endfor %}
 		{% else %}
 			Null
