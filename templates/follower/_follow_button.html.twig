@@ -1,7 +1,15 @@
 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
     {% if app.user.follows is defined and not app.user.follows.contains(user) %}
-    <a href="{{ path('app_follow', { user: user.id }) }}" class="rounded-md border p-1 border-gray-300 text-gray-600 hover:bg-gray-300 dark:text-gray-300 dark:hover:bg-gray-500 dark:border-gray-600">Follow</a>
-    {% else %}
-    <a href="{{ path('app_unfollow', { user: user.id }) }}" class="rounded-md border p-1 border-gray-300 text-gray-600 hover:bg-gray-300 dark:text-gray-300 dark:hover:bg-gray-500 dark:border-gray-600">Unfollow</a>
+    <a href="{{ path('app_follow', { user: user.id }) }}" 
+        class="rounded-md border p-1 border-gray-300 text-gray-600 
+            hover:bg-gray-300 dark:text-gray-300 dark:hover:bg-gray-500 dark:border-gray-600">
+        Follow
+    </a>
+    {% elseif app.user.follows.contains(user) %}
+    <a href="{{ path('app_unfollow', { user: user.id }) }}" 
+        class="rounded-md border p-1 border-gray-300 text-gray-600 
+            hover:bg-gray-300 dark:text-gray-300 dark:hover:bg-gray-500 dark:border-gray-600">
+        Unfollow
+    </a>
     {% endif %}
 {% endif %}

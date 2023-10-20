@@ -5,12 +5,15 @@
 
 {% block bread %}
 	<span class="cursor-default">→</span>
-	 <a class="hover:text-indigo-500" href="{{ path('app_profile', { user: user.id }) }}">User Profile</a>
+		<a class="hover:text-indigo-500" 
+			href="{{ path('app_profile', { user: user.id }) }}">
+			User Profile
+		</a>
 {% endblock %}
 
 {% block body %}
 
-	{{ include('profile/_profile_headers.html.twig') }}
+	{{ include('profile/_profile_headers.html.twig', { user: user }) }}
 	{{ include('profile/_profile_tabs.html.twig') }}
 	{{ include('follower/follower.html.twig', { users: user.follows }) }}
 

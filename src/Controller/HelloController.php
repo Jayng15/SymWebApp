@@ -19,10 +19,13 @@ class HelloController extends AbstractController
 {
 
     #[Route('/', name: 'app_index')]
-    public function index(MicroPostRepository $posts, EntityManagerInterface $entityManager, CommentRepository $comments): Response
+    public function index(
+        MicroPostRepository $posts,
+        EntityManagerInterface $entityManager,
+        CommentRepository $comments
+    ): Response
     {
         return $this->render('hello/index.html.twig',);
     }
-
 
 }
