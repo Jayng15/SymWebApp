@@ -9,12 +9,14 @@ use App\Form\ProfileImageType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\UserProfileRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class SettingsProfileController extends AbstractController
 {
@@ -56,7 +58,9 @@ class SettingsProfileController extends AbstractController
 
     #[Route('settings/profile-image', name: 'app_settings_profile_image')]
     public function profileImage(
-        Request $request
+        Request $request,
+        SluggerInterface $slugger,
+        ManagerRegistry $manager
     ): Response {
         $form = $this->createForm(ProfileImageType::class);
         /** @var User $user */
@@ -65,17 +69,33 @@ class SettingsProfileController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $profileImageFile = $form->get('profileImages')->getData();
+            $profileImageFile = $form->get('profileImage')->getData();
 
-            // if ($profileImageFile)
-            // {
-                // $originalFileName = pathinfo(
-                //     $profileImageFile->getClientOriginalName(),
-                //     PATHINFO_FILENAME
-                // );
+            if ($profileImageFile)
+            {
+                $originalFileName = pathinfo(
+                    $profileImageFile->getClientOriginalName(),
+                    PATHINFO_FILENAME
+                );
 
-                // $safeFileName
-            // } 
+                $safeFileName = $slugger->slug($originalFileName);
+                $newFileName = $safeFileName . '-' . uniqid() . '.' . $profileImageFile->guessExtension();
+            } 
+
+            try {
+                $profileImageFile->move(
+                    $this->getParameter('profiles_directory'),
+                    $newFileName
+                    );
+            } catch (FileException $e){
+            }
+            $profile = $user->getUserProfile() ?? new UserProfile();
+            $profile->setImage($newFileName);
+            $user->setUserProfile($profile);
+            $manager->getManager()->flush();
+            $this->addFlash('success', 'Your avatar has been updated');
+            
+            return $this->redirectToRoute('app_settings_profile_image');
         }
 
         return $this->render(

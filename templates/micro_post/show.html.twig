@@ -7,6 +7,11 @@
 {% endblock %}
 
 {% block body %}
+<div class="flex item-center mb-4">
+	<div>
+		{{ include ('shared/_avatar.html.twig', { profile: post.author.userProfile, size: 16 }) }}
+	</div>
+</div>
 {{ include('micro_post/_post.html.twig', {post: post}) }}
 <div class="mt-4">
 	{% for comment in post.comments %}
